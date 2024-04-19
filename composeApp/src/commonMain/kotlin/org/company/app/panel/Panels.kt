@@ -4,8 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import org.company.app.components.ItemsGrid
 
 class ToolPanel : Panel() {
 
@@ -49,23 +48,12 @@ class ToolPanel : Panel() {
                 panel = this@ToolPanel,
                 modifier = modifier
             )
-            if (size.width > size.height) {
-                Row {
-                    (1..5).forEach {
-                        Item(
-                            modifier = Modifier,
-                            text = "ToolPanel $it"
-                        )
-                    }
-                }
-            } else Column {
-                (1..5).forEach {
-                    Item(
-                        modifier = Modifier,
-                        text = "ToolPanel $it"
-                    )
-                }
-            }
+            ItemsGrid(
+                modifier = Modifier,
+                text = "Tool",
+                itemsNumber = 5,
+                size = size
+            )
         }
     }
 }
@@ -73,16 +61,14 @@ class ToolPanel : Panel() {
 @Composable
 fun BoxScope.PanelBounder(
     panel: Panel,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .background(color = Color.Black)
             .width(2.dp)
             .fillMaxHeight()
-            .align(
-                Alignment.TopStart
-            )
+            .align(Alignment.TopStart)
             .pointerInput(panel.panelSide) {
                 detectDragGestures(
                     onDrag = { change, dragAmount ->
@@ -93,7 +79,6 @@ fun BoxScope.PanelBounder(
                             x = panel.moveOffset.x + dragAmount.x
                         )
                     }
-
                 )
             }
     )
@@ -129,8 +114,6 @@ fun BoxScope.PanelBounder(
                         panel.size = panel.size.copy(
                             height = panel.size.height - dragAmount.y
                         )
-
-
                         panel.moveOffset = panel.moveOffset.copy(
                             y = panel.moveOffset.y + dragAmount.y
                         )
@@ -183,30 +166,14 @@ class PaginationPanel : Panel() {
                 .fillMaxSize()
                 .background(color = Color.Gray)
         ) {
-            if (!isShadowed) {
-                PanelBounder(
-                    panel = this@PaginationPanel,
-                    modifier = modifier
-                )
+            PanelBounder(panel = this@PaginationPanel)
 
-                if (size.width > size.height) {
-                    Row {
-                        (1..5).forEach {
-                            Item(
-                                modifier = Modifier,
-                                text = "PaginationPanel $it"
-                            )
-                        }
-                    }
-                } else Column {
-                    (1..5).forEach {
-                        Item(
-                            modifier = Modifier,
-                            text = "PaginationPanel $it"
-                        )
-                    }
-                }
-            }
+            ItemsGrid(
+                modifier = Modifier,
+                text = "Pagination",
+                itemsNumber = 5,
+                size = size
+            )
         }
     }
 
@@ -235,24 +202,12 @@ class ConfigPanel : Panel() {
                 panel = this@ConfigPanel,
                 modifier = modifier
             )
-
-            if (size.width > size.height) {
-                Row {
-                    (1..5).forEach {
-                        Item(
-                            modifier = Modifier,
-                            text = "ConfigPanel $it"
-                        )
-                    }
-                }
-            } else Column {
-                (1..5).forEach {
-                    Item(
-                        modifier = Modifier,
-                        text = "ConfigPanel $it"
-                    )
-                }
-            }
+            ItemsGrid(
+                modifier = Modifier,
+                text = "ConfigPanel",
+                itemsNumber = 5,
+                size = size
+            )
         }
     }
 }
@@ -280,6 +235,7 @@ class FreePanel : Panel() {
                 panel = this@FreePanel,
                 modifier = modifier
             )
+
         }
     }
 }

@@ -1,5 +1,4 @@
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import org.company.app.panel.Panel
 import org.company.app.panel.PanelManager
 import org.company.app.panel.PanelSide
-import org.company.app.panel.draggablePanel
+import org.company.app.draggablePanel
+import org.company.app.toIntOffset
+import org.company.app.toSize
 import kotlin.math.roundToInt
 
 
@@ -103,7 +104,7 @@ fun FourPanelsLayout(
                         bottomPanelListHeightSum
             )
         )
-        println("bottomPanelListHeightSum $bottomPanelListHeightSum")
+
         panelManager.maxWidth = constraints.maxWidth
         panelManager.maxHeight = constraints.maxHeight
 
@@ -112,6 +113,7 @@ fun FourPanelsLayout(
                 x = leftSidePlaceableList.sumOf { it.placeable.width },
                 y = topSidePlaceableList.sumOf { it.placeable.height }
             )
+
             placeLeftSidePanelList(leftSidePlaceableList, topPanelListHeightSum)
             placeRightSidePanelList(rightSidePlaceableList, constraints.maxWidth, topPanelListHeightSum)
             placeTopSidePanelList(topSidePlaceableList)
@@ -253,12 +255,3 @@ fun Placeable.PlacementScope.placeFreeSidePanelPlaceableList(panelPlaceableList:
 }
 
 
-fun Offset.toIntOffset(): IntOffset {
-    return IntOffset(this.x.toInt(), this.y.toInt())
-}
-
-fun IntOffset.isZero(): Boolean {
-    return this.x == 0 && this.y == 0
-}
-
-fun Placeable.toSize() = Size(width = width.toFloat(), height = height.toFloat())
